@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Editor</title>
+    <script src="./thumbnail.js"></script>
+  </head>
+  <body>
+    <div id="upload">
+      <span>Upload Image: </span><input type="file" id="image_upload" accept="image/jpeg" "image/png" "image/jpg">
+    </div>
+    <center><div id="thumbnail"></div></center>
+    <div id="output"></div>
+    <script>
+      var thumbnail = new Thumbnail("thumbnail");
+      // File handler for an uploaded image.
+      var upload = document.getElementById('image_upload');
+      upload.addEventListener("change", function() {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          var image_uri = reader.result;
+          var image = new Image();
+          image.onload = function() {
+            thumbnail.setImage(image);
+          };
+          image.src = image_uri;
+        });
+        reader.readAsDataURL(this.files[0]);
+      });
+    </script>
+  </body>
+</html>
